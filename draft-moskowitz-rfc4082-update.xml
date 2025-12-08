@@ -1,0 +1,309 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+<?rfc iprnotified="no" ?>
+<?rfc strict="no" ?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" consensus="true" docName="draft-moskowitz-rfc4082-update-latest"
+	category="std" ipr="trust200902" obsoletes="" updates="rfc4082" submissionType="IETF"
+	xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+
+<front> <title abbrev="TESLA Update">TESLA Update for GNSS SBAS Authentication</title>
+    <seriesInfo name="Internet-Draft" value="draft-moskowitz-rfc4082-update-latest"/>
+	<author fullname="Robert Moskowitz" initials="R" surname="Moskowitz" role='editor'>
+    <organization>HTT Consulting</organization>
+    <address>
+      <postal>
+	    <street></street>
+        <city>Oak Park</city>
+        <region>MI</region>
+        <code>48237</code>
+        <country>USA</country>
+      </postal>
+      <email>rgm@labs.htt-consult.com</email>
+	</address>
+	</author>
+	<author fullname="Ran Canetti" initials="R" surname="Canetti">
+    <organization> Boston University</organization>
+    <address>
+      <postal>
+	    <street></street>
+        <city>Boston</city>
+        <region>MA</region>
+        <code>02215</code>
+        <country>USA</country>
+      </postal>
+      <email>canetti@bu.edu</email>
+	</address>
+	</author>
+<date year="2025" />
+   <area>sec</area>
+   <workgroup>TBD</workgroup>
+    <keyword>RFC</keyword>
+     <keyword>Request for Comments</keyword>
+     <keyword>I-D</keyword>
+     <keyword>Internet-Draft</keyword>
+     <keyword>TESLA</keyword>
+<abstract>
+<t>
+	This document updates TESLA <xref target="RFC4082"/> to current
+	cryptographic methods leveraging the work done by the International
+	Civil Aviation Organization (ICAO) in their Global Navigation
+	Satellite System (GNSS) Satellite-based augmentation system (SBAS)
+	authentication protocol.  The TESLA updates are to align to this
+	and other current best practices.
+</t>
+</abstract>
+</front>
+<middle>
+<section numbered="true" toc="default"> <name>Introduction</name>
+<t>
+	TESLA <xref target="RFC4082"/> (Timed Efficient Stream
+	Loss-Tolerant Authentication) uses the best practices for
+	cryptography when published in 2005.  This is quite dated, and any
+	modern use of TESLA needs to adjust to current algorithms and
+	methods.
+</t>
+<t>
+	This document starts with the TESLA design targeted by the
+	International Civil Aviation Organization (ICAO) in their Global
+	Navigation Satellite System (GNSS) Satellite-based augmentation
+	system (SBAS) authentication protocol.  As other modern uses are
+	shared, this document will be adjusted accordingly.
+</t>
+<t>
+	The SBAS authentication protocol is more than a modern TESLA
+	implementation.  It uses a very tightly designed PKI and the C509
+	certificate encoding <xref target="I-D.ietf-cose-cbor-encoded-cert"
+	format="default"/> to work within the very highly constrained SBAS
+	communication link.  The PKI is out-of-scope for this document and
+	is described elsewhere within ICAO.  But the process of Key
+	Disclosure used in SBAS will be included here.
+</t>
+<t>
+	This document is very much a "work in progress".  Various ICAO SBAS
+	documents need to be excised for their technical updates to TESLA.
+	Also, it is anticipated that other modern uses of TESLA will be
+	captured herein.
+</t>
+</section>
+<section anchor="terms" numbered="true" toc="default"> <name>Terms and Definitions</name>
+<section numbered="true" toc="default"> <name>Requirements Terminology</name>
+	<t>
+		The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+		NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+		"MAY", and "OPTIONAL" in this document are to be interpreted as
+		described in BCP 14 <xref target="RFC2119" /> <xref
+		target="RFC8174" /> when, and only when, they appear in all
+		capitals, as shown here.
+	</t>
+</section>
+<section anchor="notation" title="Notation">
+	<dl newline="true" spacing="normal">
+		<dt>||</dt>
+		<dd>
+			Signifies concatenation of information (e.g., X || Y is the
+			concatenation of X with Y).
+		</dd>
+		<dt>Ltrunc (x, K)</dt>
+		<dd>
+			Denotes the lowest order K bits of the input x.
+		</dd>
+	</dl>
+</section>
+<section numbered="true" toc="default"> <name>Definitions</name>
+<t>
+	Author's note:  Should aviation terms (like SBAS) be defined here?
+</t>
+</section>
+</section>
+<section anchor="Updates" numbered="true" toc="default"> <name>Updates to TESLA</name>
+<section anchor="Time_Sync" numbered="true" toc="default"> <name>TESLA Time Synchronization</name>
+<t>
+	TESLA references "indirect time synchronization" like NTP <xref
+	target="RFC1035"/>. It specifies that a controller and senders
+	"engaged  in a protocol for finding the value D^0_t between them",
+	with controller and receivers "find the value D^R_t".  This is not
+	practical with GNSS time services.
+</t>
+<t>
+	TESLA time synchronization with broadcast only time services, like
+	GNSS time, may be set up with out-of-band data (e.g. T_int) and
+	in-band public key authenticated data.  This in-band data
+	transmissions need regular transmissions to accommodate "late
+	joiner receivers".
+</t>
+<t>
+	There is a challenge for receivers to use GNSS time before TESLA is
+	authenticating those time broadcasts.  Thus a reciever should work
+	in the pre-authenticated mode only to enable switch to trusted GNSS
+	time.
+</t>
+<t>
+	Use of NTP should be limited to authenticated NTP. (Editor: more
+	needed here)
+</t>
+</section>
+<section anchor="TESLA_MAC" numbered="true" toc="default"> <name>TESLA Message Authentication Code</name>
+<t>
+	TESLA uses a "cryptographic MAC" that MUST be cryptographically
+	secure.  It does not provide any guidelines to what is secure.  As
+	industry has shown that they will field cryptographically weak easy
+	keyed-MACs (e.g. Mavlink 2.0  <xref target="MAVLINK"
+	format="default"/>), this update specifies that TESLA SHOULD, at a
+	minimum, use HMAC <xref target="RFC2104"/> with at least SHA2 or
+	KMAC <xref target="DOI_10.6028_NIST.SP.800-185" format="default"/>.
+</t>
+<t>
+	Further, the one-way hash function MUST be at least SHA2.
+</t>
+<section anchor="TESLA_MAC_info" numbered="true" toc="default"> <name>Additional Info in MAC</name>
+<t>
+	Current MAC best practices allow for the inclusion of Additional
+	Information added to the message block (e.g. M || "Message
+	Domain").  This is particularly important with very short messages
+	(e.g. SBAS 250 bit messages).
+</t>
+<t>
+	The MAC function used in a TESLA implementation SHOULD include
+	Additional Information.  The size of this Additional Information is
+	determined by the size of the original message to MAC and the MAc's
+	security characteristics.
+</t>
+</section>
+</section>
+<section anchor="TESLA_aMAC" numbered="true" toc="default"> <name>An Aggregated MAC for TESLA</name>
+<t>
+	In situations where the link capacity cannot support a TESLA packet
+	for each data message, a set of MAC messages may be aggregated,
+	aMAC, and then the aMAC is transmitted. This transmission savings
+	comes at the risk that if the aMAC is lost, a whole set of messages
+	are not authenticated.
+</t>
+<figure anchor="pseudoheader">
+<name>Aggregated MAC example</name>
+<artwork align="center"><![CDATA[
+
+aMAC = Ltrunc (28, MAC(k, M1 || M2 || M3 || M4 || M5 || 0000))
+
+]]></artwork></figure>
+	<dl newline="false" spacing="normal" indent="8">
+		<dt>Mi</dt>
+		<dd>
+			Mi is the message broadcast at time t
+			all using the same key
+		</dd>
+		<dt>k</dt>
+		<dd>
+			k is the cryptographic key associated with M
+		</dd>
+	</dl>
+<section anchor="TESLA_aMAC_BEC" numbered="true" toc="default"> <name>Adding Block Erasure Codes or FEC</name>
+<t>
+	When TESLA MACs individual packets, a loss of a MAC and thus an
+	unauthenticated may not matter.  When aMACs are used, a loss aMAC
+	could be disruptive; adding a FEC (Forward Error Correction) or
+	Block Erasure Codes may be worth the additional transmission cost.
+</t>
+<t>
+	This potential lost is highly likely in noisy links like GNSS SBAS
+	(due to natural or malicious interference) where adding Block
+	Erasure Codes is considered important.
+</t>
+<t>
+	The EVENODD code is an example of an erasure code that can be used
+	here.
+</t>
+<t>
+	It is a specific, highly efficient erasure coding scheme, primarily
+	used in RAID-6 storage systems, that employs simple XOR operations
+	and two redundant disks to protect against up to two simultaneous
+	failures.  Likewise, it can be used to recover up to two
+	simultaneous aMACs.
+</t>
+<t>
+	Author's note: Does this section needs expanding?.  Should more
+	details on EVENODD be provided?
+</t>
+</section>
+</section>
+</section>
+<section anchor="IANA" numbered="true" toc="default"> <name>IANA Considerations</name>
+<t>
+	TBD
+</t>
+</section>
+<section anchor="security-considerations" numbered="true" toc="default"> <name>Security Considerations</name>
+<t>
+	TBD
+</t>
+</section>
+</middle>
+<back>
+<displayreference target="I-D.ietf-cose-cbor-encoded-cert" to="C509-Certificates"/>
+<displayreference target="DOI_10.6028_NIST.SP.800-185" to="NIST.SP.800-185"/>
+<displayreference target="DOI_10.33012_navi.595" to="SBAS Authentication"/>
+<references> <name>References</name>
+<references title="Normative References">
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4082.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+</references>
+<references title="Informative References">
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1035.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2104.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml7/reference.DOI.10.6028/NIST.SP.800-185.xml"/>
+	<xi:include href="https://datatracker.ietf.org/doc/bibxml3/draft-ietf-cose-cbor-encoded-cert.xml"/>
+	<reference anchor="DOI_10.33012_navi.595"  target="https://navi.ion.org/content/70/3/navi.595">
+		<front>
+			<title>Authentication of Satellite-Based Augmentation Systems with Over-the-Air Rekeying Schemes</title>
+			<author
+				initials="T.W." surname="Walter" fullname="Todd Walter">
+			<organization>Journal of the Institute of Navigation</organization></author>
+			<date month="09" year="2023" />
+		</front>
+	</reference>
+	<reference anchor="MAVLINK"  target="http://mavlink.io/">
+		<front>
+			<title>Micro Air Vehicle Communication Protocol</title>
+			<author/>
+			<date year="2021"/>
+		</front>
+	</reference>
+</references>
+</references>
+<section anchor="About_SBAS" numbered="true" toc="default"> <name>SBAS use of TESLA</name>
+<t>
+	The updating of TESLA in SBAS Authentication is outlined in <xref
+	target="DOI_10.33012_navi.595" format="default"/>.  This document
+	is the public source of changes made to TESLA and some of the
+	justifications.
+</t>
+<t>
+	TBD - extracted from SBAS documents.
+</t>
+<section anchor="SBAS_aMAC_BEC" numbered="true" toc="default"> <name>Adding Block Erasure Codes or FEC</name>
+<t>
+	SBAS uses the ODDEVEN Block Erasure Code that is built on a set of
+	5 aMACS which are an aggregation of 5 MACs.  Thus the Block Erasure
+	Code recovers the MAC that protected 25 SBAS messages.
+</t>
+<t>
+	Author's note: This section needs expanding.  Details of the SBAS
+	Block Erasure Codes be included?
+</t>
+</section>
+</section>
+<section numbered="false" toc="default"> <name>Acknowledgments</name>
+<t>
+	This work is in conjunction with the ICAO SBAS Authention Study
+	Group members.  This includes, and is not limited to: Jed Dennis
+	(FAA Consultant), Abdel Youssouf (Eurocontrol), Timo Warns
+	(Airbus), Todd Walter (Stanford) and chair Mikaël Mabilleau
+	(Eurocontrol).
+</t>
+</section>
+</back>
+</rfc>
