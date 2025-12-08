@@ -8,14 +8,21 @@
 <meta content="Robert Moskowitz" name="author">
 <meta content="Ran Canetti" name="author">
 <meta content="
-       This document updates TESLA   to current
-cryptographic methods leveraging the work done by the International
-Civil Aviation Organization (ICAO) in their Global Navigation
-Satellite System (GNSS) Satellite-based augmentation system (SBAS)
-authentication protocol.  The TESLA updates are to align to this
-and other current best practices. 
+       
+ This document updates TESLA   to current
+ cryptographic methods leveraging the work done by the International
+ Civil Aviation Organization (ICAO) in their Global Navigation
+ Satellite System (GNSS) Satellite-based augmentation system (SBAS)
+ authentication protocol.  The TESLA updates are to align to this
+ and other current best practices.
+ 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
+<meta content="RFC" name="keyword">
+<meta content="Request for Comments" name="keyword">
+<meta content="I-D" name="keyword">
+<meta content="Internet-Draft" name="keyword">
+<meta content="TESLA" name="keyword">
 <meta content="draft-moskowitz-rfc4082-update-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.31.0
@@ -1047,7 +1054,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TESLA SBAS Authentication</td>
+<td class="center">TESLA Update</td>
 <td class="right">December 2025</td>
 </tr></thead>
 <tfoot><tr>
@@ -1060,7 +1067,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">Network Working Group</dd>
+<dd class="workgroup">TBD</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-moskowitz-rfc4082-update-latest</dd>
 <dt class="label-updates">Updates:</dt>
@@ -1091,22 +1098,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">TESLA Update for GNSS SBAS Authentication</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document updates TESLA <span>[<a href="#RFC4082" class="cite xref">RFC4082</a>]</span> to current
-cryptographic methods leveraging the work done by the International
-Civil Aviation Organization (ICAO) in their Global Navigation
-Satellite System (GNSS) Satellite-based augmentation system (SBAS)
-authentication protocol.  The TESLA updates are to align to this
-and other current best practices.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-</section>
-<section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-about-this-document">
-<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
-      </h2>
-<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-moskowitz-rfc4082-update/">https://datatracker.ietf.org/doc/draft-moskowitz-rfc4082-update/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/rfc4082-update/draft-moskowitz-rfc4082-update">https://github.com/rfc4082-update/draft-moskowitz-rfc4082-update</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">
+ This document updates TESLA <span>[<a href="#RFC4082" class="cite xref">RFC4082</a>]</span> to current
+ cryptographic methods leveraging the work done by the International
+ Civil Aviation Organization (ICAO) in their Global Navigation
+ Satellite System (GNSS) Satellite-based augmentation system (SBAS)
+ authentication protocol.  The TESLA updates are to align to this
+ and other current best practices.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1160,350 +1158,396 @@ and other current best practices.<a href="#section-abstract-1" class="pilcrow">�
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-terms-and-definitions" class="internal xref">Terms and Definitions</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-notation" class="internal xref">Notation</a></p>
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-requirements-terminology" class="internal xref">Requirements Terminology</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-notation" class="internal xref">Notation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-definitions" class="internal xref">Definitions</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-updates-to-tesla" class="internal xref">Updates to TESLA</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-tesla-time-synchronization" class="internal xref">TESLA Time Synchronization</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-tesla-message-authenticatio" class="internal xref">TESLA Message Authentication Code</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
+                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-additional-info-in-mac" class="internal xref">Additional Info in MAC</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-an-aggregated-mac-for-tesla" class="internal xref">An Aggregated MAC for TESLA</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
+                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-adding-block-erasure-codes-" class="internal xref">Adding Block Erasure Codes or FEC</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-tesla-time-synchronization" class="internal xref">TESLA Time Synchronization</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-tesla-message-authenticatio" class="internal xref">TESLA Message Authentication Code</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-additional-info-in-mac" class="internal xref">Additional Info in MAC</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-an-aggregated-mac-for-tesla" class="internal xref">An Aggregated MAC for TESLA</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-sbas-use-of-tesla" class="internal xref">SBAS use of TESLA</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-adding-block-erasure-codes-o" class="internal xref">Adding Block Erasure Codes or FEC</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-adding-block-erasure-codes-" class="internal xref">Adding Block Erasure Codes or FEC</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
-</li>
-            </ul>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-sbas-use-of-tesla" class="internal xref">SBAS use of TESLA</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-adding-block-erasure-codes-o" class="internal xref">Adding Block Erasure Codes or FEC</a></p>
-</li>
-            </ul>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
 </section>
 </div>
-<div id="introduction">
 <section id="section-1">
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TESLA <span>[<a href="#RFC4082" class="cite xref">RFC4082</a>]</span> (Timed Efficient Stream
-Loss-Tolerant Authentication) uses the best practices for
-cryptography when published in 2005.  This is quite dated, and any
-modern use of TESLA needs to adjust to current algorithms and
-methods.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This document starts with the TESLA design targeted by the
-International Civil Aviation Organization (ICAO) in their Global
-Navigation Satellite System (GNSS) Satellite-based augmentation
-system (SBAS) authentication protocol.  As other modern uses are
-shared, this document will be adjusted accordingly.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">The SBAS authentication protocol is more than a modern TESLA
-implementation.  It uses a very tightly designed PKI and the C509
-certificate encoding <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>
-to work within the very highly constrained SBAS
-communication link.  The PKI is out-of-scope for this document and
-is described elsewhere within ICAO.  But the process of Key
-Disclosure used in SBAS will be included here.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">This document is very much a "work in progress".  Various ICAO SBAS
-documents need to be excised for their technical updates to TESLA.
-Also, it is anticipated that other modern uses of TESLA will be
-captured herein.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-1">
+ TESLA <span>[<a href="#RFC4082" class="cite xref">RFC4082</a>]</span> (Timed Efficient Stream
+ Loss-Tolerant Authentication) uses the best practices for
+ cryptography when published in 2005.  This is quite dated, and any
+ modern use of TESLA needs to adjust to current algorithms and
+ methods.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">
+ This document starts with the TESLA design targeted by the
+ International Civil Aviation Organization (ICAO) in their Global
+ Navigation Satellite System (GNSS) Satellite-based augmentation
+ system (SBAS) authentication protocol.  As other modern uses are
+ shared, this document will be adjusted accordingly.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">
+ The SBAS authentication protocol is more than a modern TESLA
+ implementation.  It uses a very tightly designed PKI and the C509
+ certificate encoding <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">C509-Certificates</a>]</span> to work within the very highly constrained SBAS
+ communication link.  The PKI is out-of-scope for this document and
+ is described elsewhere within ICAO.  But the process of Key
+ Disclosure used in SBAS will be included here.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">
+ This document is very much a "work in progress".  Various ICAO SBAS
+ documents need to be excised for their technical updates to TESLA.
+ Also, it is anticipated that other modern uses of TESLA will be
+ captured herein.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
-</div>
-<div id="conventions-and-definitions">
+<div id="terms">
 <section id="section-2">
-      <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      <h2 id="name-terms-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-terms-and-definitions" class="section-name selfRef">Terms and Definitions</a>
       </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
-"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
-described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<div id="notation">
 <section id="section-2.1">
-        <h3 id="name-notation">
-<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-notation" class="section-name selfRef">Notation</a>
+        <h3 id="name-requirements-terminology">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-requirements-terminology" class="section-name selfRef">Requirements Terminology</a>
         </h3>
-<span class="break"></span><dl class="dlParallel" id="section-2.1-1">
-          <dt id="section-2.1-1.1">||:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.1-1.2">
-            <p id="section-2.1-1.2.1">Signifies concatenation of information (e.g., X || Y is the
-concatenation of X with Y).<a href="#section-2.1-1.2.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">
+ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+ NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+ "MAY", and "OPTIONAL" in this document are to be interpreted as
+ described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all
+ capitals, as shown here.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+</section>
+<div id="notation">
+<section id="section-2.2">
+        <h3 id="name-notation">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-notation" class="section-name selfRef">Notation</a>
+        </h3>
+<span class="break"></span><dl class="dlNewline" id="section-2.2-1">
+          <dt id="section-2.2-1.1">||</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-1.2">
+ Signifies concatenation of information (e.g., X || Y is the
+ concatenation of X with Y).<a href="#section-2.2-1.2" class="pilcrow">¶</a>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.1-1.3">Ltrunc (x, K):</dt>
-          <dd style="margin-left: 1.5em" id="section-2.1-1.4">
-            <p id="section-2.1-1.4.1">Denotes the lowest order K bits of the input x.<a href="#section-2.1-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-1.3">Ltrunc (x, K)</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-1.4">
+ Denotes the lowest order K bits of the input x.<a href="#section-2.2-1.4" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
 </dl>
 </section>
 </div>
+<section id="section-2.3">
+        <h3 id="name-definitions">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-definitions" class="section-name selfRef">Definitions</a>
+        </h3>
+<p id="section-2.3-1">
+ Author's note:  Should aviation terms (like SBAS) be defined here?<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+</section>
 </section>
 </div>
 <div id="Updates">
 <section id="section-3">
       <h2 id="name-updates-to-tesla">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-updates-to-tesla" class="section-name selfRef">Updates to TESLA</a>
-    </h2>
-</section>
-</div>
-<div id="Time_Sync">
-<section id="section-4">
-      <h2 id="name-tesla-time-synchronization">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-tesla-time-synchronization" class="section-name selfRef">TESLA Time Synchronization</a>
       </h2>
-<p id="section-4-1">TESLA references "indirect time synchronization" like NTP <span>[<a href="#RFC1035" class="cite xref">RFC1035</a>]</span>.
-It specifies that a controller and senders
-"engaged  in a protocol for finding the value D^0_t between them",
-with controller and receivers "find the value D^R_t".  This is not
-practical with GNSS time services.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">TESLA time synchronization with broadcast only time services, like
-GNSS time, may be set up with out-of-band data (e.g. T_int) and
-in-band public key authenticated data.  This in-band data
-transmissions need regular transmissions to accommodate "late
-joiner receivers".<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">There is a challenge for receivers to use GNSS time before TESLA is
-authenticating those time broadcasts.  Thus a reciever should work
-in the pre-authenticated mode only to enable switch to trusted GNSS
-time.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<p id="section-4-4">Use of NTP should be limited to authenticated NTP. (Editor: more
-needed here)<a href="#section-4-4" class="pilcrow">¶</a></p>
+<div id="Time_Sync">
+<section id="section-3.1">
+        <h3 id="name-tesla-time-synchronization">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-tesla-time-synchronization" class="section-name selfRef">TESLA Time Synchronization</a>
+        </h3>
+<p id="section-3.1-1">
+ TESLA references "indirect time synchronization" like NTP <span>[<a href="#RFC1035" class="cite xref">RFC1035</a>]</span>. It specifies that a controller and senders
+ "engaged  in a protocol for finding the value D^0_t between them",
+ with controller and receivers "find the value D^R_t".  This is not
+ practical with GNSS time services.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">
+ TESLA time synchronization with broadcast only time services, like
+ GNSS time, may be set up with out-of-band data (e.g. T_int) and
+ in-band public key authenticated data.  This in-band data
+ transmissions need regular transmissions to accommodate "late
+ joiner receivers".<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">
+ There is a challenge for receivers to use GNSS time before TESLA is
+ authenticating those time broadcasts.  Thus a reciever should work
+ in the pre-authenticated mode only to enable switch to trusted GNSS
+ time.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">
+ Use of NTP should be limited to authenticated NTP. (Editor: more
+ needed here)<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="TESLA_MAC">
-<section id="section-5">
-      <h2 id="name-tesla-message-authenticatio">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-tesla-message-authenticatio" class="section-name selfRef">TESLA Message Authentication Code</a>
-      </h2>
-<p id="section-5-1">TESLA uses a "cryptographic MAC" that <span class="bcp14">MUST</span> be cryptographically
-secure.  It does not provide any guidelines to what is secure.  As
-industry has shown that they will field cryptographically weak easy
-keyed-MACs (e.g. Mavlink 2.0 <span>[<a href="#MAVLINK" class="cite xref">MAVLINK</a>]</span> this update specifies that
-TESLA <span class="bcp14">SHOULD</span>, at a minimum, use HMAC [RFC2104] with at least SHA2 or
-KMAC <span>[<a href="#NIST.SP.800-185" class="cite xref">NIST.SP.800-185</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<section id="section-3.2">
+        <h3 id="name-tesla-message-authenticatio">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-tesla-message-authenticatio" class="section-name selfRef">TESLA Message Authentication Code</a>
+        </h3>
+<p id="section-3.2-1">
+ TESLA uses a "cryptographic MAC" that MUST be cryptographically
+ secure.  It does not provide any guidelines to what is secure.  As
+ industry has shown that they will field cryptographically weak easy
+ keyed-MACs (e.g. Mavlink 2.0  <span>[<a href="#MAVLINK" class="cite xref">MAVLINK</a>]</span>), this update specifies that TESLA SHOULD, at a
+ minimum, use HMAC <span>[<a href="#RFC2104" class="cite xref">RFC2104</a>]</span> with at least SHA2 or
+ KMAC <span>[<a href="#DOI_10.6028_NIST.SP.800-185" class="cite xref">NIST.SP.800-185</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">
+ Further, the one-way hash function MUST be at least SHA2.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<div id="TESLA_MAC_info">
+<section id="section-3.2.1">
+          <h4 id="name-additional-info-in-mac">
+<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-additional-info-in-mac" class="section-name selfRef">Additional Info in MAC</a>
+          </h4>
+<p id="section-3.2.1-1">
+ Current MAC best practices allow for the inclusion of Additional
+ Information added to the message block (e.g. M || "Message
+ Domain").  This is particularly important with very short messages
+ (e.g. SBAS 250 bit messages).<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-2">
+ The MAC function used in a TESLA implementation SHOULD include
+ Additional Information.  The size of this Additional Information is
+ determined by the size of the original message to MAC and the MAc's
+ security characteristics.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="TESLA_MAC_info">
-<section id="section-6">
-      <h2 id="name-additional-info-in-mac">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-additional-info-in-mac" class="section-name selfRef">Additional Info in MAC</a>
-      </h2>
-<p id="section-6-1">Current MAC best practices allow for the inclusion of Additional
-Information added to the message block (e.g. M || "Message
-Domain").  This is particularly important with very short messages
-(e.g. SBAS 250 bit messages).<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">The MAC function used in a TESLA implementation <span class="bcp14">SHOULD</span> include
-Additional Information.  The size of this Additional Information is
-determined by the size of the original message to MAC and the MAc's
-security characteristics.<a href="#section-6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="TESLA_aMAC">
-<section id="section-7">
-      <h2 id="name-an-aggregated-mac-for-tesla">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-an-aggregated-mac-for-tesla" class="section-name selfRef">An Aggregated MAC for TESLA</a>
-      </h2>
-<p id="section-7-1">In situations where the link capacity cannot support a TESLA packet
-for each data message, a set of MAC messages may be aggregated,
-aMAC, and then the aMAC is transmitted. This transmission savings
-comes at the risk that if the aMAC is lost, a whole set of messages
-are not authenticated.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<section id="section-3.3">
+        <h3 id="name-an-aggregated-mac-for-tesla">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-an-aggregated-mac-for-tesla" class="section-name selfRef">An Aggregated MAC for TESLA</a>
+        </h3>
+<p id="section-3.3-1">
+ In situations where the link capacity cannot support a TESLA packet
+ for each data message, a set of MAC messages may be aggregated,
+ aMAC, and then the aMAC is transmitted. This transmission savings
+ comes at the risk that if the aMAC is lost, a whole set of messages
+ are not authenticated.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <span id="name-aggregated-mac-example"></span><div id="pseudoheader">
 <figure id="figure-1">
-        <div class="alignLeft art-text artwork" id="section-7-2.1">
+          <div class="alignCenter art-text artwork" id="section-3.3-2.1">
 <pre>
+
 aMAC = Ltrunc (28, MAC(k, M1 || M2 || M3 || M4 || M5 || 0000))
 
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-aggregated-mac-example" class="selfRef">Aggregated MAC example</a>
-        </figcaption></figure>
+          </figcaption></figure>
 </div>
-<span class="break"></span><dl class="dlParallel" id="section-7-3">
-        <dt id="section-7-3.1">Mi:</dt>
-        <dd style="margin-left: 1.5em" id="section-7-3.2">
-          <p id="section-7-3.2.1">Mi is the message broadcast at time t all using the same key<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3.3-3">
+          <dt id="section-3.3-3.1">Mi</dt>
+          <dd style="margin-left: 4.0em" id="section-3.3-3.2">
+ Mi is the message broadcast at time t
+ all using the same key<a href="#section-3.3-3.2" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.3-3.3">k</dt>
+          <dd style="margin-left: 4.0em" id="section-3.3-3.4">
+ k is the cryptographic key associated with M<a href="#section-3.3-3.4" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-7-3.3">k:</dt>
-        <dd style="margin-left: 1.5em" id="section-7-3.4">
-          <p id="section-7-3.4.1">k is the cryptographic key associated with M<a href="#section-7-3.4.1" class="pilcrow">¶</a></p>
-</dd>
-      <dd class="break"></dd>
 </dl>
+<div id="TESLA_aMAC_BEC">
+<section id="section-3.3.1">
+          <h4 id="name-adding-block-erasure-codes-">
+<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-adding-block-erasure-codes-" class="section-name selfRef">Adding Block Erasure Codes or FEC</a>
+          </h4>
+<p id="section-3.3.1-1">
+ When TESLA MACs individual packets, a loss of a MAC and thus an
+ unauthenticated may not matter.  When aMACs are used, a loss aMAC
+ could be disruptive; adding a FEC (Forward Error Correction) or
+ Block Erasure Codes may be worth the additional transmission cost.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-2">
+ This potential lost is highly likely in noisy links like GNSS SBAS
+ (due to natural or malicious interference) where adding Block
+ Erasure Codes is considered important.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-3">
+ The EVENODD code is an example of an erasure code that can be used
+ here.<a href="#section-3.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-4">
+ It is a specific, highly efficient erasure coding scheme, primarily
+ used in RAID-6 storage systems, that employs simple XOR operations
+ and two redundant disks to protect against up to two simultaneous
+ failures.  Likewise, it can be used to recover up to two
+ simultaneous aMACs.<a href="#section-3.3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-5">
+ Author's note: Does this section needs expanding?.  Should more
+ details on EVENODD be provided?<a href="#section-3.3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="TESLA_aMAC_BEC">
-<section id="section-8">
-      <h2 id="name-adding-block-erasure-codes-">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-adding-block-erasure-codes-" class="section-name selfRef">Adding Block Erasure Codes or FEC</a>
+</section>
+</div>
+</section>
+</div>
+<div id="IANA">
+<section id="section-4">
+      <h2 id="name-iana-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-8-1">When TESLA MACs individual packets, a loss of a MAC and thus an
-unauthenticated may not matter.  When aMACs are used, a loss aMAC
-could be disruptive; adding a FEC (Forward Error Correction) or
-Block Erasure Codes may be worth the additional transmission cost.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">This potential lost is highly likely in noisy links like GNSS SBAS
-(due to natural or malicious interference) where adding Block
-Erasure Codes is considered important.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">The EVENODD code is an example of an erasure code that can be used
-here.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">It is a specific, highly efficient erasure coding scheme, primarily
-used in RAID-6 storage systems, that employs simple XOR operations
-and two redundant disks to protect against up to two simultaneous
-failures.  Likewise, it can be used to recover up to two
-simultaneous aMACs.<a href="#section-8-4" class="pilcrow">¶</a></p>
-<p id="section-8-5">Author's note: Does this section needs expanding?.  Should more
-details on EVENODD be provided?<a href="#section-8-5" class="pilcrow">¶</a></p>
+<p id="section-4-1">
+ TBD<a href="#section-4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-9">
+<section id="section-5">
       <h2 id="name-security-considerations">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-9-1">TODO Security<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">
+ TBD<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="iana-considerations">
-<section id="section-10">
-      <h2 id="name-iana-considerations">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
-      </h2>
-<p id="section-10-1">This document has no IANA actions.<a href="#section-10-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="sec-combined-references">
-<section id="section-11">
+<section id="section-6">
       <h2 id="name-references">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<div id="sec-normative-references">
-<section id="section-11.1">
+<section id="section-6.1">
         <h3 id="name-normative-references">
-<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4082">[RFC4082]</dt>
         <dd>
-<span class="refAuthor">Perrig, A.</span>, <span class="refAuthor">Song, D.</span>, <span class="refAuthor">Canetti, R.</span>, <span class="refAuthor">Tygar, J. D.</span>, and <span class="refAuthor">B. Briscoe</span>, <span class="refTitle">"Timed Efficient Stream Loss-Tolerant Authentication (TESLA): Multicast Source Authentication Transform Introduction"</span>, <span class="seriesInfo">RFC 4082</span>, <span class="seriesInfo">DOI 10.17487/RFC4082</span>, <time datetime="2005-06" class="refDate">June 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4082">https://www.rfc-editor.org/rfc/rfc4082</a>&gt;</span>. </dd>
+<span class="refAuthor">Perrig, A.</span>, <span class="refAuthor">Song, D.</span>, <span class="refAuthor">Canetti, R.</span>, <span class="refAuthor">Tygar, J. D.</span>, and <span class="refAuthor">B. Briscoe</span>, <span class="refTitle">"Timed Efficient Stream Loss-Tolerant Authentication (TESLA): Multicast Source Authentication Transform Introduction"</span>, <span class="seriesInfo">RFC 4082</span>, <span class="seriesInfo">DOI 10.17487/RFC4082</span>, <time datetime="2005-06" class="refDate">June 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4082">https://www.rfc-editor.org/info/rfc4082</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
       <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
-</div>
-<div id="sec-informative-references">
-<section id="section-11.2">
+<section id="section-6.2">
         <h3 id="name-informative-references">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.ietf-cose-cbor-encoded-cert">[I-D.ietf-cose-cbor-encoded-cert]</dt>
+<dt id="I-D.ietf-cose-cbor-encoded-cert">[C509-Certificates]</dt>
         <dd>
 <span class="refAuthor">Mattsson, J. P.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Raza, S.</span>, <span class="refAuthor">Höglund, J.</span>, and <span class="refAuthor">M. Furuhed</span>, <span class="refTitle">"CBOR Encoded X.509 Certificates (C509 Certificates)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-cbor-encoded-cert-15</span>, <time datetime="2025-08-18" class="refDate">18 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-cbor-encoded-cert-15">https://datatracker.ietf.org/doc/html/draft-ietf-cose-cbor-encoded-cert-15</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="MAVLINK">[MAVLINK]</dt>
         <dd>
-<span class="refTitle">"Micro Air Vehicle Communication Protocol"</span>, <time datetime="2021" class="refDate">2021</time>, <span>&lt;<a href="https://mavlink.io/">https://mavlink.io/</a>&gt;</span>. </dd>
+<span class="refTitle">"Micro Air Vehicle Communication Protocol"</span>, <time datetime="2021" class="refDate">2021</time>, <span>&lt;<a href="http://mavlink.io/">http://mavlink.io/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="NIST.SP.800-185">[NIST.SP.800-185]</dt>
+<dt id="DOI_10.6028_NIST.SP.800-185">[NIST.SP.800-185]</dt>
         <dd>
-<span class="refAuthor">Kelsey, J.</span>, <span class="refAuthor">Change, S.</span>, and <span class="refAuthor">R. Perlner</span>, <span class="refTitle">"SHA-3 derived functions: cSHAKE, KMAC, TupleHash and ParallelHash"</span>, <span class="refContent">National Institute of Standards and Technology</span>, <span class="seriesInfo">DOI 10.6028/nist.sp.800-185</span>, <time datetime="2016-12" class="refDate">December 2016</time>, <span>&lt;<a href="https://doi.org/10.6028/nist.sp.800-185">https://doi.org/10.6028/nist.sp.800-185</a>&gt;</span>. </dd>
+<span class="refAuthor">Kelsey, J.</span>, <span class="refAuthor">Change, S.</span>, <span class="refAuthor">Perlner, R.</span>, and <span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"SHA-3 derived functions: cSHAKE, KMAC, TupleHash and ParallelHash"</span>, <span class="seriesInfo">DOI 10.6028/nist.sp.800-185</span>, <time datetime="2016-12" class="refDate">December 2016</time>, <span>&lt;<a href="https://doi.org/10.6028/nist.sp.800-185">https://doi.org/10.6028/nist.sp.800-185</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC1035">[RFC1035]</dt>
         <dd>
-<span class="refAuthor">Mockapetris, P.</span>, <span class="refTitle">"Domain names - implementation and specification"</span>, <span class="seriesInfo">STD 13</span>, <span class="seriesInfo">RFC 1035</span>, <span class="seriesInfo">DOI 10.17487/RFC1035</span>, <time datetime="1987-11" class="refDate">November 1987</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc1035">https://www.rfc-editor.org/rfc/rfc1035</a>&gt;</span>. </dd>
+<span class="refAuthor">Mockapetris, P.</span>, <span class="refTitle">"Domain names - implementation and specification"</span>, <span class="seriesInfo">STD 13</span>, <span class="seriesInfo">RFC 1035</span>, <span class="seriesInfo">DOI 10.17487/RFC1035</span>, <time datetime="1987-11" class="refDate">November 1987</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc1035">https://www.rfc-editor.org/info/rfc1035</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="SBAS_Authentication">[SBAS_Authentication]</dt>
+<dt id="RFC2104">[RFC2104]</dt>
+        <dd>
+<span class="refAuthor">Krawczyk, H.</span>, <span class="refAuthor">Bellare, M.</span>, and <span class="refAuthor">R. Canetti</span>, <span class="refTitle">"HMAC: Keyed-Hashing for Message Authentication"</span>, <span class="seriesInfo">RFC 2104</span>, <span class="seriesInfo">DOI 10.17487/RFC2104</span>, <time datetime="1997-02" class="refDate">February 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2104">https://www.rfc-editor.org/info/rfc2104</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="DOI_10.33012_navi.595">[SBAS Authentication]</dt>
       <dd>
-<span class="refAuthor">Anderson, J.</span>, <span class="refAuthor">Lo, S.</span>, <span class="refAuthor">Neish,, A.</span>, and <span class="refAuthor">T. Walter</span>, <span class="refTitle">"Authentication of Satellite-Based Augmentation Systems with Over-the-Air Rekeying Schemes"</span>, <span class="refContent">Institute of Navigation</span>, <span class="seriesInfo">NAVIGATION: Journal of the Institute of Navigation vol. 70, no. 3, pp. navi.595</span>, <span class="seriesInfo">DOI 10.33012/navi.595</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://doi.org/10.33012/navi.595">https://doi.org/10.33012/navi.595</a>&gt;</span>. </dd>
+<span class="refAuthor">Walter, T.W.</span>, <span class="refTitle">"Authentication of Satellite-Based Augmentation Systems with Over-the-Air Rekeying Schemes"</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://navi.ion.org/content/70/3/navi.595">https://navi.ion.org/content/70/3/navi.595</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
-</div>
 </section>
-</div>
 <div id="About_SBAS">
 <section id="appendix-A">
       <h2 id="name-sbas-use-of-tesla">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-sbas-use-of-tesla" class="section-name selfRef">SBAS use of TESLA</a>
       </h2>
-<p id="appendix-A-1">The updating of TESLA in SBAS Authentication is outlined in
-<span>[<a href="#SBAS_Authentication" class="cite xref">SBAS_Authentication</a>]</span>.  This document  is the public source of changes made to
-TESLA and some of the justifications.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2">TBD - extracted from SBAS documents.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">
+ The updating of TESLA in SBAS Authentication is outlined in <span>[<a href="#DOI_10.33012_navi.595" class="cite xref">SBAS Authentication</a>]</span>.  This document
+ is the public source of changes made to TESLA and some of the
+ justifications.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">
+ TBD - extracted from SBAS documents.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <div id="SBAS_aMAC_BEC">
 <section id="appendix-A.1">
         <h3 id="name-adding-block-erasure-codes-o">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-adding-block-erasure-codes-o" class="section-name selfRef">Adding Block Erasure Codes or FEC</a>
         </h3>
-<p id="appendix-A.1-1">SBAS uses the ODDEVEN Block Erasure Code that is built on a set of
-5 aMACS which are an aggregation of 5 MACs.  Thus the Block Erasure
-Code recovers the MAC that protected 25 SBAS messages.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-2">Author's note: This section needs expanding.  Details of the SBAS
-Block Erasure Codes be included?<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-1">
+ SBAS uses the ODDEVEN Block Erasure Code that is built on a set of
+ 5 aMACS which are an aggregation of 5 MACs.  Thus the Block Erasure
+ Code recovers the MAC that protected 25 SBAS messages.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-2">
+ Author's note: This section needs expanding.  Details of the SBAS
+ Block Erasure Codes be included?<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
-<div id="acknowledgments">
 <section id="appendix-B">
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-B-1">This work is in conjunction with the ICAO SBAS Authention Study
-Group members.  This includes, and is not limited to: Jed Dennis
-(FAA Consultant), Abdel Youssouf (Eurocontrol), Timo Warns
-(Airbus), Todd Walter (Stanford) and chair Mikaël Mabilleau
-(Eurocontrol).<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1">
+ This work is in conjunction with the ICAO SBAS Authention Study
+ Group members.  This includes, and is not limited to: Jed Dennis
+ (FAA Consultant), Abdel Youssouf (Eurocontrol), Timo Warns
+ (Airbus), Todd Walter (Stanford) and chair Mikaël Mabilleau
+ (Eurocontrol).<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 </section>
-</div>
 <div id="authors-addresses">
 <section id="appendix-C">
       <h2 id="name-authors-addresses">
@@ -1525,7 +1569,7 @@ Group members.  This includes, and is not limited to: Jed Dennis
         <div dir="auto" class="left"><span class="fn nameRole">Ran Canetti</span></div>
 <div dir="auto" class="left"><span class="org">Boston University</span></div>
 <div dir="auto" class="left">
-<span class="locality">Boston</span>, <span class="region">MA</span> <span class="postal-code">1165</span>
+<span class="locality">Boston</span>, <span class="region">MA</span> <span class="postal-code">02215</span>
 </div>
 <div dir="auto" class="left"><span class="country-name">United States of America</span></div>
 <div class="email">

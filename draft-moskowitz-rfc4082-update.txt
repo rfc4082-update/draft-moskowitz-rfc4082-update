@@ -2,7 +2,7 @@
 
 
 
-Network Working Group                                  R. Moskowitz, Ed.
+TBD                                                    R. Moskowitz, Ed.
 Internet-Draft                                            HTT Consulting
 Updates: rfc4082 (if approved)                                R. Canetti
 Intended status: Standards Track                       Boston University
@@ -20,16 +20,6 @@ Abstract
    (GNSS) Satellite-based augmentation system (SBAS) authentication
    protocol.  The TESLA updates are to align to this and other current
    best practices.
-
-About This Document
-
-   This note is to be removed before publishing as an RFC.
-
-   Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-moskowitz-rfc4082-update/.
-
-   Source for this draft and an issue tracker can be found at
-   https://github.com/rfc4082-update/draft-moskowitz-rfc4082-update.
 
 Status of This Memo
 
@@ -65,19 +55,21 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Conventions and Definitions
-     2.1.  Notation
+   2.  Terms and Definitions
+     2.1.  Requirements Terminology
+     2.2.  Notation
+     2.3.  Definitions
    3.  Updates to TESLA
-   4.  TESLA Time Synchronization
-   5.  TESLA Message Authentication Code
-   6.  Additional Info in MAC
-   7.  An Aggregated MAC for TESLA
-   8.  Adding Block Erasure Codes or FEC
-   9.  Security Considerations
-   10. IANA Considerations
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+     3.1.  TESLA Time Synchronization
+     3.2.  TESLA Message Authentication Code
+       3.2.1.  Additional Info in MAC
+     3.3.  An Aggregated MAC for TESLA
+       3.3.1.  Adding Block Erasure Codes or FEC
+   4.  IANA Considerations
+   5.  Security Considerations
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
    Appendix A.  SBAS use of TESLA
      A.1.  Adding Block Erasure Codes or FEC
    Acknowledgments
@@ -98,34 +90,42 @@ Table of Contents
 
    The SBAS authentication protocol is more than a modern TESLA
    implementation.  It uses a very tightly designed PKI and the C509
-   certificate encoding [I-D.ietf-cose-cbor-encoded-cert] to work within
-   the very highly constrained SBAS communication link.  The PKI is out-
-   of-scope for this document and is described elsewhere within ICAO.
-   But the process of Key Disclosure used in SBAS will be included here.
+   certificate encoding [C509-Certificates] to work within the very
+   highly constrained SBAS communication link.  The PKI is out-of-scope
+   for this document and is described elsewhere within ICAO.  But the
+   process of Key Disclosure used in SBAS will be included here.
 
    This document is very much a "work in progress".  Various ICAO SBAS
    documents need to be excised for their technical updates to TESLA.
    Also, it is anticipated that other modern uses of TESLA will be
    captured herein.
 
-2.  Conventions and Definitions
+2.  Terms and Definitions
+
+2.1.  Requirements Terminology
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-2.1.  Notation
+2.2.  Notation
 
-   ||:  Signifies concatenation of information (e.g., X || Y is the
+   ||
+      Signifies concatenation of information (e.g., X || Y is the
       concatenation of X with Y).
 
-   Ltrunc (x, K):  Denotes the lowest order K bits of the input x.
+   Ltrunc (x, K)
+      Denotes the lowest order K bits of the input x.
+
+2.3.  Definitions
+
+   Author's note: Should aviation terms (like SBAS) be defined here?
 
 3.  Updates to TESLA
 
-4.  TESLA Time Synchronization
+3.1.  TESLA Time Synchronization
 
    TESLA references "indirect time synchronization" like NTP [RFC1035].
    It specifies that a controller and senders "engaged in a protocol for
@@ -146,16 +146,18 @@ Table of Contents
    Use of NTP should be limited to authenticated NTP.  (Editor: more
    needed here)
 
-5.  TESLA Message Authentication Code
+3.2.  TESLA Message Authentication Code
 
    TESLA uses a "cryptographic MAC" that MUST be cryptographically
    secure.  It does not provide any guidelines to what is secure.  As
    industry has shown that they will field cryptographically weak easy
-   keyed-MACs (e.g. Mavlink 2.0 [MAVLINK] this update specifies that
+   keyed-MACs (e.g. Mavlink 2.0 [MAVLINK]), this update specifies that
    TESLA SHOULD, at a minimum, use HMAC [RFC2104] with at least SHA2 or
    KMAC [NIST.SP.800-185].
 
-6.  Additional Info in MAC
+   Further, the one-way hash function MUST be at least SHA2.
+
+3.2.1.  Additional Info in MAC
 
    Current MAC best practices allow for the inclusion of Additional
    Information added to the message block (e.g. M || "Message Domain").
@@ -167,7 +169,7 @@ Table of Contents
    determined by the size of the original message to MAC and the MAc's
    security characteristics.
 
-7.  An Aggregated MAC for TESLA
+3.3.  An Aggregated MAC for TESLA
 
    In situations where the link capacity cannot support a TESLA packet
    for each data message, a set of MAC messages may be aggregated, aMAC,
@@ -175,15 +177,15 @@ Table of Contents
    the risk that if the aMAC is lost, a whole set of messages are not
    authenticated.
 
-   aMAC = Ltrunc (28, MAC(k, M1 || M2 || M3 || M4 || M5 || 0000))
+      aMAC = Ltrunc (28, MAC(k, M1 || M2 || M3 || M4 || M5 || 0000))
 
                       Figure 1: Aggregated MAC example
 
-   Mi:  Mi is the message broadcast at time t all using the same key
+   Mi      Mi is the message broadcast at time t all using the same key
 
-   k:  k is the cryptographic key associated with M
+   k       k is the cryptographic key associated with M
 
-8.  Adding Block Erasure Codes or FEC
+3.3.1.  Adding Block Erasure Codes or FEC
 
    When TESLA MACs individual packets, a loss of a MAC and thus an
    unauthenticated may not matter.  When aMACs are used, a loss aMAC
@@ -206,36 +208,36 @@ Table of Contents
    Author's note: Does this section needs expanding?.  Should more
    details on EVENODD be provided?
 
-9.  Security Considerations
+4.  IANA Considerations
 
-   TODO Security
+   TBD
 
-10.  IANA Considerations
+5.  Security Considerations
 
-   This document has no IANA actions.
+   TBD
 
-11.  References
+6.  References
 
-11.1.  Normative References
+6.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/rfc/rfc2119>.
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC4082]  Perrig, A., Song, D., Canetti, R., Tygar, J. D., and B.
               Briscoe, "Timed Efficient Stream Loss-Tolerant
               Authentication (TESLA): Multicast Source Authentication
               Transform Introduction", RFC 4082, DOI 10.17487/RFC4082,
-              June 2005, <https://www.rfc-editor.org/rfc/rfc4082>.
+              June 2005, <https://www.rfc-editor.org/info/rfc4082>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-11.2.  Informative References
+6.2.  Informative References
 
-   [I-D.ietf-cose-cbor-encoded-cert]
+   [C509-Certificates]
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
@@ -244,33 +246,35 @@ Table of Contents
               cbor-encoded-cert-15>.
 
    [MAVLINK]  "Micro Air Vehicle Communication Protocol", 2021,
-              <https://mavlink.io/>.
+              <http://mavlink.io/>.
 
    [NIST.SP.800-185]
-              Kelsey, J., Change, S., and R. Perlner, "SHA-3 derived
+              Kelsey, J., Change, S., Perlner, R., and National
+              Institute of Standards and Technology, "SHA-3 derived
               functions: cSHAKE, KMAC, TupleHash and ParallelHash",
-              National Institute of Standards and Technology,
               DOI 10.6028/nist.sp.800-185, December 2016,
               <https://doi.org/10.6028/nist.sp.800-185>.
 
    [RFC1035]  Mockapetris, P., "Domain names - implementation and
               specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
-              November 1987, <https://www.rfc-editor.org/rfc/rfc1035>.
+              November 1987, <https://www.rfc-editor.org/info/rfc1035>.
 
-   [SBAS_Authentication]
-              Anderson, J., Lo, S., Neish,, A., and T. Walter,
-              "Authentication of Satellite-Based Augmentation Systems
-              with Over-the-Air Rekeying Schemes", Institute of
-              Navigation, NAVIGATION: Journal of the Institute of
-              Navigation vol. 70, no. 3, pp. navi.595,
-              DOI 10.33012/navi.595, 2023,
-              <https://doi.org/10.33012/navi.595>.
+   [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
+              Hashing for Message Authentication", RFC 2104,
+              DOI 10.17487/RFC2104, February 1997,
+              <https://www.rfc-editor.org/info/rfc2104>.
+
+   [SBAS Authentication]
+              Walter, T.W., "Authentication of Satellite-Based
+              Augmentation Systems with Over-the-Air Rekeying Schemes",
+              September 2023,
+              <https://navi.ion.org/content/70/3/navi.595>.
 
 Appendix A.  SBAS use of TESLA
 
-   The updating of TESLA in SBAS Authentication is outlined in
-   [SBAS_Authentication].  This document is the public source of changes
-   made to TESLA and some of the justifications.
+   The updating of TESLA in SBAS Authentication is outlined in [SBAS
+   Authentication].  This document is the public source of changes made
+   to TESLA and some of the justifications.
 
    TBD - extracted from SBAS documents.
 
@@ -301,6 +305,6 @@ Authors' Addresses
 
    Ran Canetti
    Boston University
-   Boston, MA 1165
+   Boston, MA 02215
    United States of America
    Email: canetti@bu.edu
