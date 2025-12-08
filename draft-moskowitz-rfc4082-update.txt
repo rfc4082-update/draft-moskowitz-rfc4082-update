@@ -28,11 +28,6 @@ About This Document
    Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-moskowitz-rfc4082-update/.
 
-   Discussion of this document takes place on the rfc4082-update Working
-   Group mailing list (mailto:rfc4082-update@ietf.org), which is
-   archived at https://mailarchive.ietf.org/arch/browse/rfc4082-update.
-   Subscribe at https://www.ietf.org/mailman/listinfo/rfc4082-update/.
-
    Source for this draft and an issue tracker can be found at
    https://github.com/rfc4082-update/draft-moskowitz-rfc4082-update.
 
@@ -71,6 +66,7 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
+     2.1.  Notation
    3.  Updates to TESLA
    4.  TESLA Time Synchronization
    5.  TESLA Message Authentication Code
@@ -119,6 +115,13 @@ Table of Contents
    "OPTIONAL" in this document are to be interpreted as described in
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
+
+2.1.  Notation
+
+   ||:  Signifies concatenation of information (e.g., X || Y is the
+      concatenation of X with Y).
+
+   Ltrunc (x, K):  Denotes the lowest order K bits of the input x.
 
 3.  Updates to TESLA
 
@@ -171,6 +174,14 @@ Table of Contents
    and then the aMAC is transmitted.  This transmission savings comes at
    the risk that if the aMAC is lost, a whole set of messages are not
    authenticated.
+
+   aMAC = Ltrunc (28, MAC(k, M1 || M2 || M3 || M4 || M5 || 0000))
+
+                      Figure 1: Aggregated MAC example
+
+   Mi:  Mi is the message broadcast at time t all using the same key
+
+   k:  k is the cryptographic key associated with M
 
 8.  Adding Block Erasure Codes or FEC
 
@@ -241,6 +252,10 @@ Table of Contents
               National Institute of Standards and Technology,
               DOI 10.6028/nist.sp.800-185, December 2016,
               <https://doi.org/10.6028/nist.sp.800-185>.
+
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
+              November 1987, <https://www.rfc-editor.org/rfc/rfc1035>.
 
    [SBAS_Authentication]
               Anderson, J., Lo, S., Neish,, A., and T. Walter,
