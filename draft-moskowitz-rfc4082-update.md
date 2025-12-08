@@ -25,25 +25,25 @@ venue:
   github: "rfc4082-update/draft-moskowitz-rfc4082-update"
 
 author:
- -
-    ins: R. Moskowitz
-    fullname: Robert Moskowitz
-    organization: HTT Consulting
-    email: rgm@labs.htt-consult.com
-    city: Oak Park
-    region: MI
-    code: 48237
-    country: USA
-    role: editor
-  -
-    ins: R. Canetti
-    fullname: Ran Canetti
-    organization: Boston University
-    email: canetti@bu.edu
-    city: Boston
-    region: MA
-    code: 02215
-    country: USA
+-
+  ins: R. Moskowitz
+  fullname: Robert Moskowitz
+  organization: HTT Consulting
+  email: rgm@labs.htt-consult.com
+  city: Oak Park
+  region: MI
+  code: 48237
+  country: USA
+  role: editor
+-
+  ins: R. Canetti
+  fullname: Ran Canetti
+  organization: Boston University
+  email: canetti@bu.edu
+  city: Boston
+  region: MA
+  code: 02215
+  country: USA
 
 normative:
   RFC4082:
